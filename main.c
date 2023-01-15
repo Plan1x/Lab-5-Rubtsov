@@ -1,18 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <conio.h>
+#include "lib.h"
+
 #define ARRAY_SIZE 50
-void fill_buff(FILE *fp, char *str);
-void erase_buff(FILE *fp, char *str, unsigned int size);
-void open_file(FILE *fp);
-void open_bin_file(FILE *fp);
-double f(double x);
+
 int main()
 {
     FILE *fp;
 
-    char shifr[ARRAY_SIZE], stud[ARRAY_SIZE];
+    char shifr[ARRAY_SIZE], stud[ARRAY_SIZE][ARRAY_SIZE];
     erase_buff(fp, shifr, ARRAY_SIZE);
     erase_buff(fp, stud, ARRAY_SIZE);
     double F = 0, x1 = 0, x2 = 0, delta = 0, x = 0;
@@ -26,15 +23,15 @@ int main()
         fscanf(fp, "%u", &N);
         fscanf(fp, "%lf", &delta);
         fscanf(fp, "%u", &method);
-        fill_buff(fp, shifr);
-        fill_buff(fp, stud);
+        fscanf(fp, "%s", &shifr);
+        fscanf(fp, "%s", &stud);
 
         printf("%lf\n", x1);
         printf("%lf\n", x2);
         printf("%u\n", N);
         printf("%lf\n", delta);
-        printf("%u\n", method);
-        printf("%s", shifr);
+        printf("%u\n\n", method);
+        printf("%s\n", shifr);
         printf("%s", stud);
 
         fclose(fp);
@@ -117,42 +114,8 @@ int main()
     else
     {
         printf("Error! File cannot be opened 1 ");
-        getch();
         return 0;
     }
-    getch();
+    
     return 0;
-}
-
-
-void fill_buff(FILE *fp, char *str)
-{
-    do
-        str[0] = fgetc(fp);
-    while (str[0] == '\n');
-    for (int i = 1; str[i - 1] != '\n'; i++)
-        str[i] = fgetc(fp);
-}
-
-void erase_buff(FILE *fp, char *str, unsigned int size)
-{
-    for (int i = 0; i < size; i++)
-        str[i] = '\0';
-}
-
-void open_file(FILE *fp)
-{
-    remove("out.txt");
-    fp = fopen("out.txt", "w");
-}
-
-void open_bin_file(FILE *fp)
-{
-    remove("out.bin");
-    fp = fopen("out.bin", "wb");
-}
-
-double f(double x)
-{
-    return pow(x + 125, 3) -45 - 18;
 }
